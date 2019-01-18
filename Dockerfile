@@ -1,9 +1,10 @@
 FROM java
 
-ENV MIRTH_CONNECT_VERSION 3.6.1.b220
+ENV MIRTH_CONNECT_VERSION 3.7.0.b2399
+ENV MIRTH_DOWNLOAD_URL https://s3.amazonaws.com/downloads.mirthcorp.com/connect/
 
 # Mirth Connect is run with user `connect`, uid = 1000
-# If you bind mount a volume from the host or a data container, 
+# If you bind mount a volume from the host or a data container,
 # ensure you use the same uid
 RUN useradd -u 1000 mirth
 
@@ -20,7 +21,7 @@ VOLUME /opt/mirth-connect/appdata
 
 RUN \
   cd /tmp && \
-  wget http://downloads.mirthcorp.com/connect/$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
+	wget $MIRTH_DOWNLOAD_URL$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   tar xvzf mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   rm -f mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   mv Mirth\ Connect/* /opt/mirth-connect/ && \
@@ -28,7 +29,12 @@ RUN \
 
 WORKDIR /opt/mirth-connect
 
-EXPOSE 8080 8443
+# configure FHIR connector extensions use port 9443
+COPY fhir-3.7.0.b1046.zip /tmp
+RUN unzip /tmp/fhir-3.7.0.b1046.zip -d /opt/mirth-connect/extensions && \
+    rm /tmp/fhir-3.7.0.b1046.zip
+
+EXPOSE 8080 8443 9443
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
