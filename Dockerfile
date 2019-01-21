@@ -6,7 +6,7 @@ ENV MIRTH_DOWNLOAD_URL https://s3.amazonaws.com/downloads.mirthcorp.com/connect/
 # Mirth Connect is run with user `connect`, uid = 1000
 # If you bind mount a volume from the host or a data container,
 # ensure you use the same uid
-RUN useradd -u 1000 mirth
+#RUN useradd -u 1000 mirth
 
 # grab gosu for easy step-down from root
 RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
@@ -24,8 +24,9 @@ RUN \
 	wget $MIRTH_DOWNLOAD_URL$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   tar xvzf mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   rm -f mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
-  mv Mirth\ Connect/* /opt/mirth-connect/ && \
-  chown -R mirth /opt/mirth-connect
+  mv Mirth\ Connect/* /opt/mirth-connect/
+
+#	&& \ chown -R mirth /opt/mirth-connect
 
 WORKDIR /opt/mirth-connect
 
