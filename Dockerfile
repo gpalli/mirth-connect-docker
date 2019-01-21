@@ -37,7 +37,7 @@ RUN unzip /tmp/fhir-3.7.0.b1046.zip -d /opt/mirth-connect/extensions && \
 
 EXPOSE 8080 8443 9443
 
-COPY docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+#COPY docker-entrypoint.sh /
+#ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["java", "-jar", "mirth-server-launcher.jar"]
