@@ -12,6 +12,7 @@ RUN \
 	wget $MIRTH_DOWNLOAD_URL$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   tar xvzf mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   rm -f mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
+  mkdir -p /opt/mirth-connect && \
   mv Mirth\ Connect/* /opt/mirth-connect/
 
 WORKDIR /opt/mirth-connect
