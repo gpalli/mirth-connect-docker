@@ -10,14 +10,13 @@ RUN apt-get update && \
 RUN \
   cd /tmp && \
 	wget $MIRTH_DOWNLOAD_URL$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
-  tar xvzf mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
-  rm -f mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   mkdir -p /opt/mirth-connect && \
-  mv Mirth\ Connect/* /opt/mirth-connect/
+  tar xvzf mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz -C /opt/mirth-connect && \
+  rm -f mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz
 
 WORKDIR /opt/mirth-connect
 
-RUN rm -fr /opt/mirth-connect/server-lib/database/mysql-connector-java-5.1.32-bin.jar
+RUN rm -fr /opt/mirth-connect/server-lib/database/mysql-connector-java-*.jar
 COPY mysql-connector-java-5.1.47-bin.jar /opt/mirth-connect/server-lib/database
 
 # configure FHIR connector extensions use port 9443
