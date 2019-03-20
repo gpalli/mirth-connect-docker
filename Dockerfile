@@ -11,8 +11,9 @@ RUN apt-get update && \
 RUN \
   cd /tmp && \
 	wget $MIRTH_DOWNLOAD_URL$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
+  tar xvzf mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz && \
   mkdir -p /opt/mirth-connect && \
-  tar xvzf mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz -C /opt/mirth-connect && \
+  mv Mirth\ Connect/* /opt/mirth-connect/ && \
   rm -f mirthconnect-$MIRTH_CONNECT_VERSION-unix.tar.gz
 
 WORKDIR /opt/mirth-connect
@@ -32,4 +33,4 @@ RUN chmod +x run.sh
 
 EXPOSE 8080 8443
 
-CMD ["/opt/mirth-connect/run.sh"]
+CMD ["./run.sh"]
