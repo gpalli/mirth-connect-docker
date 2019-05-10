@@ -13,4 +13,8 @@ if [ -r /etc/secret-volume/keystore.jks ]; then
 fi
 
 echo "Launching Mirth Connect Server..."
-java -Duser.timezone="America/Argentina/Buenos_Aires" -jar mirth-server-launcher.jar
+if [ -r /opt/mirth-connect/newrelic/newrelic.yml ]; then
+  java -Duser.timezone="America/Argentina/Buenos_Aires" -javaagent:/opt/mirth-connect/newrelic/newrelic.jar -jar mirth-server-launcher.jar
+else
+  java -Duser.timezone="America/Argentina/Buenos_Aires" -jar mirth-server-launcher.jar
+fi

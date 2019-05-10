@@ -27,6 +27,12 @@ COPY fhir-3.7.0.b1046.zip /tmp
 RUN unzip /tmp/fhir-3.7.0.b1046.zip -d /opt/mirth-connect/extensions && \
     rm /tmp/fhir-3.7.0.b1046.zip
 
+# configuro newrelic
+COPY newrelic-java-5.0.0.zip /tmp
+RUN unzip /tmp/newrelic-java-5.0.0.zip -d /opt/mirth-connect/ && \
+    rm /tmp/newrelic-java-5.0.0.zip && \
+    rm /opt/mirth-connect/newrelic/newrelic.yml
+
 # configure launcher
 COPY run.sh .
 RUN chmod +x run.sh
